@@ -1,37 +1,35 @@
 import mysql.connector
-def getConnection():
-	global dbs
+def getMySQLConnection(host, user, password):
 	global db1
 	try:
-		dbs = ["pdb1", "pdb2", "pdb3", "pdb4"]
 		db1 = mysql.connector.connect(
-			host="localhost",
-			user="root",
-			password="root"
-		)	
+			host=host,
+			user=user,
+			password=password
+		)
 	except:
-		print("Error while trying to get a mysql connection")
+		print("Error while trying to get a connection")
 	else:
-		print("Connected to mysql successfully")
-def getCursor():
+		print("Successfully got a mysql connection")
+		
+def getMySQLCursor():
 	global c1
 	try:
 		c1 = db1.cursor()
 	except:
-		print("Error while trying to get a cursor")
+		print("Error while trying to get a mysql cursor")
 	else:
 		print("Successfully got a mysql cursor")
-def createDatabases():
+
+def createMySQLdatabases(*dbs):
 	try:
 		for x in dbs:
 			c1.execute("CREATE DATABASE "+x)
 	except:
-		print("Error while trying to create all required databases")
+		print("Error while trying to create the required databases")
 	else:
-		print("Successfully created the required databases: pdb1, pdb2, pdb3, pdb4")
-def performAllTasks():
-	getConnection()
-	getCursor()
-	createDatabases()
+		print("Successfully created the required databases")
 
-performAllTasks()
+getMySQLConnection("localhost", "root", "root")
+getMySQLCursor()
+createMySQLdatabases("vik1", "vik2", "vik3", "vik4", "vik5")
